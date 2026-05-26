@@ -2,18 +2,25 @@
 
 ## Overview
 
-A simple web application with a login feature.
+A simple web application with a secure, server-side login feature using Firebase Functions.
 
 ## Current State
 
-*   **index.html**: Basic HTML structure with a title and a login form.
+*   **index.html**: Basic HTML structure with a login form.
 *   **style.css**: Styles for the login form.
-*   **main.js**: Logs form data to the console on submission.
+*   **main.js**: Contains client-side logic that sends login credentials to a serverless function.
+*   **functions/index.js**: A Firebase Function that securely handles user authentication.
 
-## Plan for Login Feature
+## Plan for Secure Authentication
 
-1.  **HTML**: Create a login form in `index.html` with username and password fields, and a "Login" button. Add a message area to display login status.
-2.  **CSS**: Add styles to `style.css` to make the login form visually appealing and centered on the page. Add styles for success and error messages.
-3.  **JavaScript**: In `main.js`, add an event listener to the form to handle submission. 
-    *   Implement authentication logic to verify username (`kuce_connect`) and password (`korea1905`).
-    *   Display a success or error message to the user based on the authentication result.
+1.  **Firebase Functions Setup**: Create a directory named `functions` to house the server-side code.
+2.  **Backend Logic (`functions/index.js`)**:
+    *   Create an HTTP-triggered Firebase Function.
+    *   This function will receive the username and password from the client.
+    *   It will securely validate the credentials against the stored values (`kuce_connect` and `korea1905`). The validation logic is never exposed to the client.
+    *   It will return a JSON response indicating whether the login was successful or not.
+3.  **Client-Side Logic (`main.js`)**:
+    *   Remove the insecure, hardcoded username and password validation.
+    *   On form submission, use the `fetch` API to send a POST request containing the user's input to the Firebase Function endpoint.
+    *   Process the JSON response from the function and display the appropriate "success" or "error" message to the user.
+4.  **Configuration**: Configure the project to correctly deploy both the web app (Firebase Hosting) and the authentication logic (Firebase Functions).
